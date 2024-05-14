@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e5e5; /* Changed background color */
+        }
+        
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #555; /* Changed background color */
+            color: #fff;
+        }
+        
+        h2 {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            margin: 0;
+        }
+        
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc; /* Changed border color */
+            text-align: left;
+        }
+        
+        th {
+            background-color: #666; /* Changed background color */
+            color: #fff;
+        }
+        
+        form {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc; /* Changed border color */
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #555; /* Changed background color */
+        }
+
+
+        .performance-score {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Performance Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Employee Name</th>
+                <th>Performance Score</th>
+                <th>Manager Comment</th>
+                <th>Manager Name</th>
+                <th>Date Added</th>
+                <th>Supervisor Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for performance in performances %}
+            <tr>
+                <td>{{ performance.id }}</td>
+                <td>{{ performance.employee_name }}</td>
+                <td>{{ performance.performance_score }}</td>
+                <td>{{ performance.manager_comment }}</td>
+                <td>{{ performance.manager_name }}</td>
+                <td>{{ performance.date_added }}</td>
+                <td>{{ performance.supervisor_comment }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <a href="/test_add_performance"><button>Go To Performance Form</button></a>
+        <a href="{{ url_for('login') }}" style="margin-left: 10px;"><button>Logout</button></a>
+    </div>
+
+    <h1>Update Manager Comment</h1>
+    <form method="POST" action="/update_comment">
+        <!-- Dropdown list of performance records -->
+        <label for="performance_id">Select Performance Record:</label>
+        <select id="performance_id" name="performance_id">
+            {% for performance in performances %}
+                <option value="{{ performance.id }}">{{ performance.employee_name }}</option>
+            {% endfor %}
+        </select><br><br>
+        
+        <!-- Text area for new manager comment -->
+        <label for="comment">New Manager Comment:</label>
+        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
+        
+        <!-- Manager Name (from session) -->
+        <input type="hidden" id="manager_name" name="manager_name" value="{{ session['username'] }}">
+        
+        <!-- Display manager name -->
+        <label>Manager Name:</label>
+        <span>{{ session['username'] }}</span><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+
+</body>
+</html>

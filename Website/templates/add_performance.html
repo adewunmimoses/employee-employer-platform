@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Performance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e5e5; /* Changed background color */
+        }
+        
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #555; /* Changed background color */
+            color: #fff;
+        }
+        
+        h2 {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            margin: 0;
+        }
+        
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc; /* Changed border color */
+            text-align: left;
+        }
+        
+        th {
+            background-color: #666; /* Changed background color */
+            color: #fff;
+        }
+        
+        form {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc; /* Changed border color */
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #555; /* Changed background color */
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Performance</h1>
+    <form id="performance_form" action="{{ url_for('add_performance_form') }}" method="post">
+        <label class="label-style">Employee:</label>
+        <select class="input-style" id="employeeList" name="employeeList" required>
+        <option value="" selected disabled hidden>Select an employee</option>
+        {% for employee in users %}
+            {% if employee.role == 'employee' %}
+                <option value="{{ employee.username }}">{{ employee.username }}</option>
+            {% endif %}
+        {% endfor %}
+        </select><br><br>
+
+        <label class="label-style">Age:</label>
+        <input type="number" step="0.1" name="age" class="input-style" required />
+        <br><br>
+        <label>
+            Extraversion:
+            <input type="number" step="0.1" name="extraversion" required />
+        </label><br><br>
+        <label>
+            Independence:
+            <input type="number" step="0.1" name="independ" required />
+        </label><br><br>
+        <label>
+            Self-control:
+            <input type="number" step="0.1" name="selfcontrol" required />
+        </label><br><br>
+        <label>
+            Anxiety:
+            <input type="number" step="0.1" name="anxiety" required />
+        </label><br><br>
+        <label>
+            Novator:
+            <input type="number" step="0.1" name="novator" required />
+        </label><br><br>
+        <label>
+            Gender:
+            <label>
+                Female:
+                <input type="radio" name="gender" value="f" required />
+            </label>
+            <label>
+                Male:
+                <input type="radio" name="gender" value="m" required />
+            </label>
+        </label><br><br>
+        <label>
+            Profession:
+            <label>
+                Sales:
+                <input type="radio" name="profession" value="S" required />
+            </label>
+            <label>
+                Management:
+                <input type="radio" name="profession" value="M" required />
+            </label>
+        </label><br><br>
+        <label>
+            Way:
+            <label>
+                Bus:
+                <input type="radio" name="way" value="b" required />
+            </label>
+            <label>
+                Car:
+                <input type="radio" name="way" value="c" required />
+            </label>
+            <label>
+                Foot:
+                <input type="radio" name="way" value="f" required />
+            </label>
+        </label><br><br>
+        <label>
+            Engagement (1-10):
+            <input type="number" name="engagement" min="1" max="10" required />
+        </label><br><br>
+        <label>
+            Employee Satisfaction (1-10):
+            <input type="number" name="employee_satisfaction" min="1" max="10" required />
+        </label><br><br>
+        <button type="submit">Submit Comment</button>
+    </form>
+</body>
+</html>

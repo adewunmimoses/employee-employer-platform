@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e5e5; /* Changed background color */
+        }
+        
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #555; /* Changed background color */
+            color: #fff;
+        }
+        
+        h2 {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            margin: 0;
+        }
+        
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc; /* Changed border color */
+            text-align: left;
+        }
+        
+        th {
+            background-color: #666; /* Changed background color */
+            color: #fff;
+        }
+        
+        form {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc; /* Changed border color */
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #555; /* Changed background color */
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <!-- Display Users -->
+    <h2>All Users</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- Loop through users and display each user's information -->
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.location }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add New User Form -->
+    <h2>Add New User</h2>
+    <form id="addUserForm" action="{{ url_for('add_user') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <label for="username">Location:</label>
+        <input type="text" id="location" name="location" required><br><br>
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="employee">Employee</option>
+            <option value="manager">Manager</option>
+            <option value="supervisor">Supervisor</option>
+        </select><br><br>
+        <button type="button" id="addUserBtn">Add User</button>
+    </form>
+
+    <!-- Logout Button -->
+    <a href="{{ url_for('login') }}" style="margin-left: 10px;"><button>Logout</button></a>
+
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Handle click event for adding a new user
+            $('#addUserBtn').click(function() {
+                // Make AJAX request to add the user
+                $.ajax({
+                    url: $('#addUserForm').attr('action'),
+                    method: 'POST',
+                    data: $('#addUserForm').serialize(),
+                    success: function(data) {
+                        // Reload the page after adding the user
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>

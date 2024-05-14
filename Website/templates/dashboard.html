@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        h2 {
+            color: #333;
+            padding: 20px;
+            background-color: #999;
+            margin: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #999;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        button {
+            background-color: #999;
+            color: #333;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #888;
+        }
+    </style>
+</head>
+<body>
+    {% set user = false %}
+{% for performance in performances %}
+    {% if performance.employee_name == username %}
+        {% set user = true %}
+    {% endif %}
+{% endfor %}
+
+<h2>Welcome, {{ username }}!</h2>
+
+{% if performances %}
+    <table>
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Performance Score</th>
+                <th>Manager Comment</th>
+                <th>Supervisor Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for performance in performances %}
+            {% if performance.employee_name == username %}
+            <tr>
+                <td>{{ performance.employee_name }}</td>
+                <td>{{ performance.performance_score }}</td>
+                <td>{{ performance.manager_comment }}</td>
+                <td>{{ performance.supervisor_comment }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+    <a href="{{ url_for('login') }}" style="margin-left: 10px;"><button>Logout</button></a>
+</body>
+</html>

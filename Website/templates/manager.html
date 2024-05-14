@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Performance Review Form</title>
+
+    <script>
+        let employee_name;
+
+        function showPerformanceForm() {
+            document.getElementById('performance_form').style.display = 'block';
+            document.getElementById('comment_form').style.display = 'none';
+        }
+
+        function showCommentForm() {
+            if (employee_name) {
+                document.getElementById('comment_form').style.display = 'block';
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e5e5; /* Changed background color */
+        }
+        
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #555; /* Changed background color */
+            color: #fff;
+        }
+        
+        h2 {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            margin: 0;
+        }
+        
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc; /* Changed border color */
+            text-align: left;
+        }
+        
+        th {
+            background-color: #666; /* Changed background color */
+            color: #fff;
+        }
+        
+        form {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc; /* Changed border color */
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #666; /* Changed background color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #555; /* Changed background color */
+        }
+    </style>
+</head>
+<body onload="showPerformanceForm()">
+    <h1>Add Comment</h1>
+    
+    <!-- Display Performance Score -->
+    {% if performance_score %}
+    <div id="performance_score" style="display: block;">
+        <h2>Performance Score: {{ performance_score }}</h2>
+    </div>
+    {% else %}
+    <div id="performance_score" style="display: none;"></div>
+    {% endif %}
+
+    <!-- Add Comment Form -->
+    <form id="comment_form" action="{{ url_for('add_comment') }}" method="post" style="display: none;">
+        <input type="hidden" name="employee_name" value="">
+        <label for="comment">Add Comment:</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
+        <label for="manager_name">Manager Name:</label>
+        <input type="text" id="manager_name" name="manager_name" value="{{ session['username'] }}" required><br><br>
+        <label for="supervisor_comment">Supervisor Comment:</label>
+        <textarea id="supervisor_comment" name="supervisor_comment" rows="4" cols="50" required></textarea><br><br>
+        <button type="submit">Submit Comment</button>
+    </form>
+
+    <script>
+        // Show performance form by default
+        showPerformanceForm();
+    </script>
+</body>
+</html>
